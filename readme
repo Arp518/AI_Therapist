@@ -1,0 +1,491 @@
+🧠 AI Therapist
+
+Meet Neo , An AI-powered Therapist that speaks Genz it is designed to provide empathetic, context-aware conversations through structured conversational sessions., Gen-Z–friendly tone. It integrates sentiment analysis to adapt responses based on the user’s emotional state, making interactions feel more supportive and personalized.
+
+The project was built to explore how conversational AI can lower barriers to mental health support by providing an always-available, judgment-free space for reflection. Neo is not a replacement for professional care, but a complementary tool that helps users articulate thoughts, track mood patterns, and engage in meaningful self-dialogue.
+
+---
+
+## ✨ Features
+
+* 🤖 AI-powered empathetic conversations
+* 🧠 Context-aware real time voice sessions
+* ⚡ Real-time messaging using WebSockets
+* 🔊 Speech-to-text and text-to-speech support
+* 🗃️ Session storage using SQLite
+* 🖥️ React-based frontend
+* 🔐 API key–based authentication (no hardcoded secrets)
+
+---
+
+## 🛠 Tech Stack
+
+### Backend
+
+* **Python 3.10 / 3.11**
+* Flask
+* Flask-SocketIO
+* SQLite
+* Grok API (LLM inference)
+* faster-whisper (speech-to-text)
+* edge-tts / pyttsx3 (text-to-speech)
+
+### Frontend
+
+* React (Create React App)
+* Node.js 18 LTS
+* npm
+
+---
+
+## 📁 Project Structure
+
+```
+AI_Therapist/
+│
+├── backend/
+│   ├── app.py
+│   ├── services/
+│   │   └── ai_service.py        # Grok API integration
+│   ├── database/
+│   ├── data/                   # ❌ not in git (SQLite DB)
+│   ├── venv/                   # ❌ not in git
+│   ├── .env                    # ❌ not in git (API keys)
+│   └── requirements.txt
+│
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   ├── package.json
+│   └── node_modules/           # ❌ not in git
+│
+├── .gitignore
+└── README.md
+```
+
+---
+
+## ⚠️ Prerequisites
+
+### Software Required
+
+| Software | Version      |
+| -------- | ------------ |
+| Python   | 3.10 or 3.11 |
+| Node.js  | 18 LTS       |
+| Git      | Latest       |
+
+---
+
+## 🚀 Setup Instructions (Corrected)
+
+### 1️⃣ Clone the Repository
+
+```cmd
+git clone https://github.com/ayushhirlekar/AI_Therapist.git
+cd AI_Therapist
+```
+
+---
+
+## 🔧 Backend Setup
+
+### 2️⃣ Create & Activate Virtual Environment
+
+```cmd
+cd backend
+python -m venv venv
+venv\Scripts\activate
+```
+
+---
+
+### 3️⃣ Install Backend Dependencies
+
+```cmd
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+---
+
+### 4️⃣ Configure Environment Variables (IMPORTANT)
+
+Create a `.env` file inside `backend/`:
+
+```env
+GROK_API_KEY=your_grok_api_key_here
+```
+
+⚠️ **Never commit `.env` to GitHub**
+
+---
+
+### 5️⃣ Start Backend Server
+
+```cmd
+python app.py
+```
+
+Expected:
+
+```
+Running on http://localhost:8000
+```
+
+Test:
+
+```
+http://localhost:8000/health
+```
+
+---
+
+## 🎨 Frontend Setup
+
+### 6️⃣ Install Frontend Dependencies
+
+Open a **new terminal**:
+
+```cmd
+cd AI_Therapist\frontend
+npm install
+```
+
+---
+
+### 7️⃣ Start Frontend
+
+```cmd
+npm start
+```
+
+Open:
+
+```
+http://localhost:3000
+```
+
+---
+
+## ▶️ Running the Application
+
+### Backend (Terminal 1)
+
+```cmd
+cd backend
+venv\Scripts\activate
+python app.py
+```
+
+### Frontend (Terminal 2)
+
+```cmd
+cd frontend
+npm start
+```
+
+## 📚 Complete Dependencies List
+
+### Backend Python Packages (requirements.txt)
+
+```
+Flask==2.3.3                          # Web framework
+Flask-Cors==4.0.0                     # Cross-origin requests
+Flask-SocketIO==5.5.1                 # WebSocket support
+python-socketio==5.13.0               # SocketIO client/server
+python-engineio==4.12.2               # Engine.IO protocol
+
+llama_cpp_python==0.2.11              # AI model inference (LOCAL)
+transformers==4.35.0                  # Hugging Face transformers
+torch==2.8.0                          # PyTorch deep learning
+torchvision==0.23.0                   # Computer vision
+sentence-transformers==2.2.2          # Sentence embeddings
+tokenizers==0.14.1                    # Fast tokenization
+safetensors==0.6.2                    # Safe tensor serialization
+
+faster-whisper==0.9.0                 # Speech-to-text
+edge-tts==7.2.3                       # Text-to-speech (Microsoft)
+pyttsx3==2.99                         # Offline text-to-speech
+pydub==0.25.1                         # Audio processing
+
+nltk==3.9.1                           # Natural language toolkit
+scikit-learn==1.7.1                   # Machine learning algorithms
+scipy==1.11.3                         # Scientific computing
+numpy==1.24.3                         # Numerical arrays
+numba==0.61.2                         # JIT compiler
+llvmlite==0.44.0                      # LLVM binding
+
+huggingface-hub==0.17.3               # Model hub access
+ctranslate2==3.24.0                   # Fast inference engine
+onnxruntime==1.22.1                   # ONNX model runtime
+openai-whisper==20250625              # OpenAI Whisper models
+
+aiohttp==3.12.15                      # Async HTTP client
+aiohappyeyeballs==2.6.1               # Async DNS resolver
+aiosignal==1.4.0                      # Async signal support
+requests==2.31.0                      # HTTP library
+urllib3==2.5.0                        # HTTP client
+certifi==2025.8.3                     # SSL certificates
+charset-normalizer==3.4.3             # Character encoding
+
+bidict==0.23.1                        # Bidirectional dict
+coloredlogs==15.0.1                   # Colored logs
+humanfriendly==10.0                   # Human-readable formats
+diskcache==5.6.3                      # Disk caching
+joblib==1.5.2                         # Parallel processing
+
+Werkzeug==3.1.3                       # WSGI utilities
+Jinja2==3.1.6                         # Template engine
+MarkupSafe==3.0.2                     # String escaping
+click==8.2.1                          # CLI creation
+itsdangerous==2.2.0                   # Secure cookies
+blinker==1.9.0                        # Signal support
+
+pygame==2.6.1                         # Game development (for audio)
+pillow==11.3.0                        # Image processing
+av==10.0.0                            # Video processing
+comtypes==1.4.12                      # COM automation (Windows)
+
+PyYAML==6.0.2                         # YAML parser
+packaging==25.0                       # Package version handling
+filelock==3.19.1                      # File locking
+fsspec==2025.7.0                      # File system spec
+tqdm==4.67.1                          # Progress bars
+regex==2025.8.29                      # Regular expressions
+tabulate==0.9.0                       # Pretty tables
+
+pywin32==311                          # Windows API access
+pypiwin32==223                        # PyWin32 installer
+pyreadline3==3.5.4                    # Readline for Windows
+
+# Development/testing
+black==23.7.0                         # Code formatter
+pytest==7.4.0                         # Testing framework
+iniconfig==2.1.0                      # INI parser
+pluggy==1.6.0                         # Plugin system
+
+# Additional utilities
+more-itertools==10.7.0                # Iterator tools
+mypy_extensions==1.1.1                # Type checking
+pathspec==0.12.1                      # Path matching
+platformdirs==4.4.0                   # Platform directories
+tiktoken==0.11.0                      # Tokenizer
+sympy==1.14.0                         # Symbolic math
+mpmath==1.3.0                         # Math library
+networkx==3.5                         # Network analysis
+flatbuffers==25.2.10                  # Serialization
+protobuf==6.32.0                      # Protocol buffers
+attrs==25.3.0                         # Classes without boilerplate
+frozenlist==1.7.0                     # Frozen list
+multidict==6.6.4                      # Multi-value dict
+propcache==0.3.2                      # Property caching
+yarl==1.20.1                          # URL parsing
+h11==0.16.0                           # HTTP/1.1 protocol
+wsproto==1.2.0                        # WebSocket protocol
+simple-websocket==1.1.0               # Simple WebSocket
+git-filter-repo==2.47.0               # Git history filtering
+colorama==0.4.6                       # Colored terminal (Windows)
+```
+
+**Total Size**: ~3-4GB installed
+
+---
+$ pip list
+Package               Version
+--------------------- ---------
+aiohappyeyeballs      2.6.1
+aiohttp               3.12.15
+aiosignal             1.4.0
+attrs                 25.3.0
+av                    10.0.0
+bidict                0.23.1
+black                 23.7.0
+blinker               1.9.0
+certifi               2025.8.3
+charset-normalizer    3.4.3
+click                 8.2.1
+colorama              0.4.6
+coloredlogs           15.0.1
+comtypes              1.4.12
+ctranslate2           3.24.0
+diskcache             5.6.3
+edge-tts              7.2.3
+faster-whisper        0.9.0
+filelock              3.19.1
+Flask                 2.3.3
+Flask-Cors            4.0.0
+Flask-SocketIO        5.5.1
+flatbuffers           25.2.10
+frozenlist            1.7.0
+fsspec                2025.7.0
+git-filter-repo       2.47.0
+h11                   0.16.0
+huggingface-hub       0.17.3
+humanfriendly         10.0
+idna                  3.10
+iniconfig             2.1.0
+itsdangerous          2.2.0
+Jinja2                3.1.6
+joblib                1.5.2
+llama_cpp_python      0.2.11
+llvmlite              0.44.0
+MarkupSafe            3.0.2
+more-itertools        10.7.0
+mpmath                1.3.0
+multidict             6.6.4
+mypy_extensions       1.1.0
+networkx              3.5
+nltk                  3.9.1
+numba                 0.61.2
+numpy                 1.24.3
+onnxruntime           1.22.1
+openai-whisper        20250625
+packaging             25.0
+pathspec              0.12.1
+pillow                11.3.0
+pip                   25.2
+platformdirs          4.4.0
+pluggy                1.6.0
+propcache             0.3.2
+protobuf              6.32.0
+pydub                 0.25.1
+pygame                2.6.1
+pypiwin32             223
+pyreadline3           3.5.4
+pytest                7.4.0
+python-engineio       4.12.2
+python-socketio       5.13.0
+pyttsx3               2.99
+pywin32               311
+PyYAML                6.0.2
+regex                 2025.8.29
+requests              2.31.0
+safetensors           0.6.2
+scikit-learn          1.7.1
+scipy                 1.11.3
+sentence-transformers 2.2.2
+sentencepiece         0.2.1
+setuptools            65.5.0
+simple-websocket      1.1.0
+sympy                 1.14.0
+tabulate              0.9.0
+threadpoolctl         3.6.0
+tiktoken              0.11.0
+tokenizers            0.14.1
+torch                 2.8.0
+torchvision           0.23.0
+tqdm                  4.67.1
+transformers          4.35.0
+typing_extensions     4.15.0
+urllib3               2.5.0
+Werkzeug              3.1.3
+wsproto               1.2.0
+yarl                  1.20.1
+
+imp packages
+
+### Frontend npm Packages (package.json)
+
+The frontend uses hundreds of npm packages. Main ones include:
+
+```json
+{
+  "dependencies": {
+    "react": "^18.x",              // UI library
+    "react-dom": "^18.x",          // React DOM rendering
+    "react-scripts": "5.x",        // Build tooling
+    "web-vitals": "^2.x"           // Performance monitoring
+  }
+}
+```
+
+Plus hundreds of sub-dependencies managed automatically by npm.
+
+**Total Size**: ~500MB-1GB installed in `node_modules/`
+
+---
+
+## 🔄 Project Maintenance
+
+### Updating Dependencies
+
+**Backend**:
+```cmd
+cd backend
+venv\Scripts\activate
+pip install --upgrade -r requirements.txt
+```
+
+**Frontend**:
+```cmd
+cd frontend
+npm update
+```
+
+---
+
+### Pulling Latest Changes from GitHub
+
+```cmd
+cd C:\Projects\AI_Therapist
+git pull origin main
+```
+
+Then reinstall dependencies if `requirements.txt` or `package.json` changed.
+
+---
+
+### Creating a New Feature
+
+```cmd
+git checkout -b feature-name
+# Make your changes
+git add .
+git commit -m "Description of changes"
+git push origin feature-name
+```
+
+---
+
+### Cleaning Up
+
+**Remove Python cache**:
+```cmd
+cd backend
+rmdir /s /q __pycache__
+del /s *.pyc
+```
+
+**Rebuild virtual environment**:
+```cmd
+cd backend
+rmdir /s /q venv
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+**Rebuild node_modules**:
+```cmd
+cd frontend
+rmdir /s /q node_modules
+npm install
+```
+
+---
+
+## 📞 Support & Resources
+
+### Getting Help
+
+1. **Check this README first** - Most common issues are covered
+2. **Search existing GitHub issues**: https://github.com/ayushhirlekar/AI_Therapist/issues
+3. **Create a new issue** with:
+   - What you were trying to do
+   - What command you ran
+   - Full error message
+   - Your Windows version
+   - Python version (`python --version`)
+   - Node version (`node --version`)
+

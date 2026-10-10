@@ -1,0 +1,11 @@
+/* App Container */
+.App {
+  min-height: 100vh;
+  background: var(--white);
+}
+
+/* Remove any default margins */
+.App * {
+  margin: 0;
+  padding: 0;
+}
