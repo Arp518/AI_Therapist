@@ -6,6 +6,7 @@ import os
 import uuid
 import ssl
 import asyncio
+import time
 
 # NUCLEAR OPTION: Monkey patch ssl module BEFORE anything else imports it
 _original_create_default_context = ssl.create_default_context
@@ -58,11 +59,33 @@ class TTSService:
             print("❌ Edge TTS not installed. Install with: pip install edge-tts")
             raise ImportError("Please install Edge TTS: pip install edge-tts")
 
+    def _cleanup_old_audio(self, directory, max_age_seconds=1800):
+        """Clean up audio files older than max_age_seconds (30 minutes) to prevent disk bloat"""
+        try:
+            if not os.path.exists(directory):
+                return
+            now = time.time()
+            for filename in os.listdir(directory):
+                if filename.startswith("response_") and filename.endswith(".mp3"):
+                    file_path = os.path.join(directory, filename)
+                    if os.path.isfile(file_path):
+                        if (now - os.path.getmtime(file_path)) > max_age_seconds:
+                            try:
+                                os.remove(file_path)
+                            except OSError:
+                                pass
+        except Exception as e:
+            print(f"⚠️ Audio cleanup warning: {e}")
+
     async def synthesize_async(self, text, voice):
         """Generate speech with optimal settings for natural voice"""
-        filename = f"response_{uuid.uuid4().hex[:8]}.mp3"
         directory = os.path.join("static", "audio")
         os.makedirs(directory, exist_ok=True)
+
+        # Clean up stale audio files
+        self._cleanup_old_audio(directory)
+
+        filename = f"response_{uuid.uuid4().hex[:8]}.mp3"
         filepath = os.path.join(directory, filename)
         
         # Create communicate with optimal settings

@@ -143,16 +143,20 @@ def voice_chat_complete():
         print("\n🎧 Starting transcription...")
         step2_start = time.time()
         
-        user_message = voice_service.transcribe_audio(temp_path)
+        try:
+            user_message = voice_service.transcribe_audio(temp_path)
+        finally:
+            # Clean up temp file safely even if transcription errors out
+            if os.path.exists(temp_path):
+                try:
+                    os.remove(temp_path)
+                    print("✅ Temp file cleaned up")
+                except Exception as cleanup_err:
+                    print(f"⚠️ Failed to remove temp audio: {cleanup_err}")
         
         step2_time = time.time() - step2_start
         print(f"✅ Transcription result: {user_message}")
         print(f"⏱️  Step 2 (Transcription): {step2_time:.3f}s")
-        
-        # Clean up temp file
-        if os.path.exists(temp_path):
-            os.remove(temp_path)
-            print("✅ Temp file cleaned up")
         
         if not user_message:
             print('❌ Transcription failed or empty')
@@ -216,7 +220,7 @@ def voice_chat_complete():
         for voice_name in voices_to_try:
             try:
                 print(f"   Trying voice: {voice_name}")
-                audio_file = tts_service.generate_speech(clean_text, voice_name="emma")
+                audio_file = tts_service.generate_speech(clean_text, voice_name=voice_name)
                 if audio_file and os.path.exists(audio_file):
                     print(f"   ✅ Success with {voice_name}")
                     break
@@ -417,4 +421,4 @@ if __name__ == '__main__':
     print("\n🎙️ Starting Flask server on http://0.0.0.0:8000")
     print("🌐 Frontend should connect from: http://localhost:3000")
     print("=" * 60)
-    app.run(host='0.0.0.0', port=8000, debug=True)
+    socketio.run(app, host='0.0.0.0', port=8000, debug=True, allow_unsafe_werkzeug=True)
